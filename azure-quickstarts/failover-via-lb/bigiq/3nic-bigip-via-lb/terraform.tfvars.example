@@ -1,0 +1,31 @@
+# Azure CREDs
+subscription_id = ""
+client_id       = ""
+client_secret   = ""
+tenant_id       = ""
+
+# VM CREDs
+user_name       = "azureuser"
+user_password   = "F5emea12345!"
+
+# Azure Deployment environment
+prefix          = "3nic-bigip-via-lb-bigiq"
+unique_string   = "testapp"
+location        = "westeurope"
+
+# BIG-IP Network environment
+cidr              = "10.1.0.0/16"
+subnet_management = ["10.1.0.0/24"]
+subnet_external   = ["10.1.1.0/24"]
+subnet_internal   = ["10.1.2.0/24"]
+
+# BIG-IP
+instance_type    = "Standard_DS3_v2"
+image_name       = "f5-big-all-2slot-byol"
+product          = "f5-big-ip-byol"
+bigip_version    = "16.1.202000"
+
+# BIG-IQ
+bigiq_ip        = ""
+bigiq_user_name = ""
+bigiq_password  = ""
