@@ -17,11 +17,11 @@ Azure quickstarts deliver a full deployment, including:
  ## How to Start
  Download the code from github into your own repository.
 
- ** git clone https://github.com/gwolfis/f5-bigip-terraform.git**
+ **git clone https://github.com/gwolfis/f5-bigip-terraform.git**
 
  Make sure you copy the terraform.tfvars.example to terraform.tfvars.
 
- ** cp terraform.tfvars.example terraform.tfvars
+ **cp terraform.tfvars.example terraform.tfvars
 
  Make sure you have both Terraform and Azure CLI installed on your system.
 
