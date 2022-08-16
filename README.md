@@ -46,7 +46,7 @@ The application can be tested and validated by using the application public IP o
 
 Make sure to test and generate some traffic to fill up the Azure Telemetry.
 
-One test you shoul make for sure is providing an illegal action to awake the included WAF configuration.
+One test you should make for sure is providing an illegal action to awake the included WAF configuration.
 
 Use the following curl command to create this illegal action:
 
