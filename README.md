@@ -21,7 +21,7 @@ Azure quickstarts deliver a full deployment, including:
 
  Make sure you copy the terraform.tfvars.example to terraform.tfvars.
 
- **cp terraform.tfvars.example terraform.tfvars
+ **cp terraform.tfvars.example terraform.tfvars**
 
  Make sure you have both Terraform and Azure CLI installed on your system.
 
