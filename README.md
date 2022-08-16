@@ -53,7 +53,7 @@ Use the following curl command to create this illegal action:
 **curl -sk -X DELETE https://<your_apps_public_ip_address>**
 
 ## Azure Telemetry
-Logging can be watched by using the AZure Workbook which has been created during the deployment. In the Azure Console you can go to the resource group and search for **f5telemetry** and select it. Now select **Workbooks** and select **F5 BIG-IP WAF View** and check the graphs.
+Logging can be watched by using the Azure Workbook which has been created during the deployment. In the Azure Console you can go to the resource group and search for **f5telemetry** and select it. Now select **Workbooks** and select **F5 BIG-IP WAF View** and check the graphs.
 
 ## Troubleshooting
 When for some reason your deployment doesn't work as expected or you are just curious how things work under the hood, here are some things you can check out **on the BIG-IP**:
