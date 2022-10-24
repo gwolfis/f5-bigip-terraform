@@ -1,0 +1,21 @@
+# Azure CREDs
+subscription_id = ""
+client_id       = ""
+client_secret   = ""
+tenant_id       = ""
+
+# VM CREDs
+user_name       = "azureuser"
+user_password   = "F5emea123!"
+
+# Azure Deployment environment
+prefix          = "4nic-bigip-via-lb-w-netsync-payg"
+unique_string   = "testapp"
+location        = "westeurope"
+
+# BIG-IP Network environment
+cidr              = "10.1.0.0/16"
+subnet_management = ["10.1.0.0/24"]
+subnet_external   = ["10.1.1.0/24"]
+subnet_internal   = ["10.1.2.0/24"]
+subnet_ha         = ["10.1.3.0/24"]
