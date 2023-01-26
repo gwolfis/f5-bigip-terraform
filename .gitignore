@@ -1,0 +1,3 @@
+azure-quickstarts/failover-via-api/payg/3nic-bigip-via-api/terraform.tfvars
+azure-quickstarts/failover-via-api/payg/3nic-bigip-via-api/.terraform*
+azure-quickstarts/failover-via-api/payg/3nic-bigip-via-api/terraform.tfstate*

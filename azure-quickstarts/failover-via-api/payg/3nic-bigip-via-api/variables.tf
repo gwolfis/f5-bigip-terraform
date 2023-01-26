@@ -11,6 +11,12 @@ variable "prefix" {}
 variable "unique_string" {}
 variable "location" {}
 
+# F5 employee required:
+variable "owner" {
+  type                  = string
+  description           = "Employee e-mail address"
+}
+
 #Tags
 variable "environment" { default = "azure" }
 variable "service_discovery_value" { default = "production" }

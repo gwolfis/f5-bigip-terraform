@@ -7,6 +7,7 @@ resource "azurerm_public_ip" "bigip1_mgmt_pip" {
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
   allocation_method   = "Static"
+  tags                = local.tags
 }
 
 resource "azurerm_public_ip" "bigip1_ext_pip" {
@@ -15,6 +16,7 @@ resource "azurerm_public_ip" "bigip1_ext_pip" {
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
   allocation_method   = "Static"
+  tags                = local.tags
 }
 
 resource "azurerm_public_ip" "bigip1_ext_vpip" {
@@ -23,6 +25,7 @@ resource "azurerm_public_ip" "bigip1_ext_vpip" {
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
   allocation_method   = "Static"
+  tags                = local.tags
 }
 
 # Network Interfaces BIGIP1
@@ -38,6 +41,8 @@ resource "azurerm_network_interface" "bigip1_management" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.bigip1_mgmt_pip.id
   }
+
+  tags                = local.tags
 }
 
 resource "azurerm_network_interface" "bigip1_external" {
@@ -61,10 +66,11 @@ resource "azurerm_network_interface" "bigip1_external" {
     public_ip_address_id          = azurerm_public_ip.bigip1_ext_vpip.id
   }
 
-  tags = {
+  tags = merge({
     f5_cloud_failover_label   = "${var.prefix}-failover-label"
     f5_cloud_failover_nic_map = "external"
-  }
+  },
+  local.tags)
 }
 
 resource "azurerm_network_interface" "bigip1_internal" {
@@ -80,10 +86,11 @@ resource "azurerm_network_interface" "bigip1_internal" {
     primary                       = true
   }
 
-  tags = {
+  tags = merge({
     f5_cloud_failover_label   = "${var.prefix}-failover-label"
     f5_cloud_failover_nic_map = "internal"
-  }
+  },
+  local.tags)
 }
 
 # Associate NSG with Network Interfaces
@@ -122,8 +129,8 @@ locals {
     remote_host_int         = azurerm_network_interface.bigip0_internal.private_ip_address 
     self_ip_external        = azurerm_network_interface.bigip1_external.private_ip_address
     self_ip_internal        = azurerm_network_interface.bigip1_internal.private_ip_address
-    management_gateway      = cidrhost(azurerm_subnet.management.address_prefix, 1)
-    external_gateway        = cidrhost(azurerm_subnet.external.address_prefix, 1)
+    management_gateway      = cidrhost(azurerm_subnet.management.address_prefixes[0], 1)
+    external_gateway        = cidrhost(azurerm_subnet.external.address_prefixes[0], 1)
     f5_cloud_failover_label = "${var.prefix}-failover-label"
     vip                     = element(azurerm_network_interface.bigip0_external.private_ip_addresses, 1)
     unique_string           = var.unique_string
@@ -165,5 +172,7 @@ resource "azurerm_linux_virtual_machine" "bigip1" {
     caching              = "None"
     storage_account_type = "Premium_LRS"
   }
+
+  tags                          = local.tags
 }
 

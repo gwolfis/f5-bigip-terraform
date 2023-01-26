@@ -32,10 +32,11 @@ resource "azurerm_network_security_group" "mgmtnsg" {
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-mgmtnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }
 
 resource "azurerm_network_security_group" "extnsg" {
@@ -95,10 +96,11 @@ resource "azurerm_network_security_group" "extnsg" {
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-extnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }
 
 resource "azurerm_network_security_group" "intnsg" {
@@ -132,8 +134,9 @@ resource "azurerm_network_security_group" "intnsg" {
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-intnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }

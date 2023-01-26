@@ -1,13 +1,13 @@
 terraform {
-  required_version = "~> 1.1.4"
+  required_version = "> 1.1.4"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.94.0"
+      version = ">2.94.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "3.1.0"
+      version = ">3.1.0"
     }
     template = {
       source  = "hashicorp/template"
@@ -19,17 +19,28 @@ terraform {
     }
     local = {
       source  = "hashicorp/local"
-      version = "2.1.0"
+      version = ">2.1.0"
     }
   }
 }
 
+locals {
+  tags = {
+    "Owner" = var.owner
+  }
+}
+
 provider "azurerm" {
-  features {}
-  subscription_id = var.subscription_id
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
+  /*  subscription_id = var.subscription_id
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
+  */
 }
 
 
@@ -42,6 +53,7 @@ resource "random_id" "id" {
 resource "azurerm_resource_group" "rg" {
   name     = var.prefix
   location = var.location
+  tags     = local.tags
 }
 
 resource "azurerm_storage_account" "cfe_storage" {
@@ -51,11 +63,12 @@ resource "azurerm_storage_account" "cfe_storage" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  tags = {
+  tags = merge({
     name                    = "${var.prefix}-cfe-storage"
     environment             = var.environment
     f5_cloud_failover_label = "${var.prefix}-failover-label"
-  }
+    },
+  local.tags)
 }
 
 #Create Azure Managed User Identity and Role Definition
@@ -63,6 +76,7 @@ resource "azurerm_user_assigned_identity" "user_identity" {
   name                = "${var.prefix}-ident"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
+  tags                = local.tags
 }
 
 # resource "azurerm_role_assignment" "rg_contributor" {
@@ -75,16 +89,16 @@ data "azurerm_subscription" "rg" {}
 
 resource "azurerm_role_assignment" "bigip0_contributor" {
   //name                 = azurerm_linux_virtual_machine.bigip0.id
-  scope                = data.azurerm_subscription.rg.id
-  role_definition_id   = "${data.azurerm_subscription.rg.id}${data.azurerm_role_definition.contributor.id}"
-  principal_id         = lookup(azurerm_linux_virtual_machine.bigip0.identity[0], "principal_id")
+  scope              = data.azurerm_subscription.rg.id
+  role_definition_id = "${data.azurerm_subscription.rg.id}${data.azurerm_role_definition.contributor.id}"
+  principal_id       = lookup(azurerm_linux_virtual_machine.bigip0.identity[0], "principal_id")
 }
 
 resource "azurerm_role_assignment" "bigip1_contributor" {
   //name                 = azurerm_linux_virtual_machine.bigip1.id
-  scope                = data.azurerm_subscription.rg.id
-  role_definition_id   = "${data.azurerm_subscription.rg.id}${data.azurerm_role_definition.contributor.id}"
-  principal_id         = lookup(azurerm_linux_virtual_machine.bigip1.identity[0], "principal_id")
+  scope              = data.azurerm_subscription.rg.id
+  role_definition_id = "${data.azurerm_subscription.rg.id}${data.azurerm_role_definition.contributor.id}"
+  principal_id       = lookup(azurerm_linux_virtual_machine.bigip1.identity[0], "principal_id")
 }
 
 data "azurerm_role_definition" "contributor" {
