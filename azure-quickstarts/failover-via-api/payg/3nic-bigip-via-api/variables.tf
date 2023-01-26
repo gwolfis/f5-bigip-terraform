@@ -41,6 +41,11 @@ variable "subnet_internal" {
 variable "management_gateway" { default = "10.0.0.1"}
 variable "external_gateway" { default = "10.0.1.1"}
 
+# F5 employee required:
+variable "employee_IP" {
+  type    = string 
+}
+
 # BIGIP Image PAYG
 variable "instance_type" { default = "Standard_DS3_v2" }
 variable "image_name" { default = "f5-bigip-virtual-edition-25m-best-hourly" }

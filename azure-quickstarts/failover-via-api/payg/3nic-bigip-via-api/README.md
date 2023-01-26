@@ -1,3 +1,4 @@
+# F5 Employees only
 ## Azure login
 
 1. `az login`
@@ -9,3 +10,7 @@ az account list -o table
 SUBSCRIPTION=<id>
 az account set --subscription $SUBSCRIPTION
 ```
+
+## Updating your source IP:
+
+Execute `./updateIP.py` prior running `terrafrom plan/apply`
