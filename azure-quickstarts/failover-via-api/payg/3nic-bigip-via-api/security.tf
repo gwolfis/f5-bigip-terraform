@@ -15,7 +15,7 @@ resource "azurerm_network_security_group" "mgmtnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 
@@ -28,7 +28,7 @@ resource "azurerm_network_security_group" "mgmtnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "443"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 
@@ -53,7 +53,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 
@@ -66,7 +66,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "443"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 
@@ -79,7 +79,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "8443"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 
@@ -92,7 +92,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = var.employee_IP
+    source_address_prefix      = var.trusted_IP
     destination_address_prefix = "*"
   }
 

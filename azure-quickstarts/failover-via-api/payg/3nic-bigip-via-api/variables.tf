@@ -11,7 +11,6 @@ variable "prefix" {}
 variable "unique_string" {}
 variable "location" {}
 
-# F5 employee required:
 variable "owner" {
   type                  = string
   description           = "Employee e-mail address"
@@ -41,8 +40,7 @@ variable "subnet_internal" {
 variable "management_gateway" { default = "10.0.0.1"}
 variable "external_gateway" { default = "10.0.1.1"}
 
-# F5 employee required:
-variable "employee_IP" {
+variable "trusted_IP" {
   type    = string 
 }
 

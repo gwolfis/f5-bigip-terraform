@@ -14,9 +14,9 @@ response = requests.get(url)
 with fileinput.input(files="terraform.tfvars",inplace=True) as input:
     for line in input:
         input_line = ''
-        search_string = re.findall(r'employee_IP',line.strip())
+        search_string = re.findall(r'trusted_IP',line.strip())
         if len(search_string) >0 :
-            input_line = "employee_IP       = \"" + str(response.text)+"/32\""
+            input_line = "trusted_IP       = \"" + str(response.text)+"/32\""
             print(input_line)
         else:
             print(line.strip())
