@@ -8,6 +8,7 @@ resource "azurerm_log_analytics_workspace" "law" {
   sku                 = "PerGB2018"
   retention_in_days   = 90
   depends_on = [ azurerm_resource_group.rg ]
+  tags                = local.tags
 }
 
 #Create Azure Log Analytics Workbook
@@ -32,4 +33,5 @@ resource "azurerm_application_insights" "web" {
   location            = azurerm_resource_group.rg.location
   workspace_id        = azurerm_log_analytics_workspace.law.id
   application_type    = "other"
+  tags                = local.tags
 }

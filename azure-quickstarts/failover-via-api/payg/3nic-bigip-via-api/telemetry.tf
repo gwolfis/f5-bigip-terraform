@@ -7,8 +7,7 @@ resource "azurerm_log_analytics_workspace" "law" {
   location            = azurerm_resource_group.rg.location
   sku                 = "PerGB2018"
   retention_in_days   = 90
-  depends_on = [ azurerm_resource_group.rg
-  ]
+  depends_on = [ azurerm_resource_group.rg ]
   tags                = local.tags
 }
 

@@ -13,6 +13,16 @@ variable "prefix" {}
 variable "unique_string" {}
 variable "location" {}
 
+variable "owner" {
+  type                  = string
+  description           = "Employee e-mail address"
+}
+
+variable "trusted_IP" {
+  type    = string 
+}
+
+
 # BIGIP Instances
 variable "default_instance_count" { default = 2 }
 variable "zones" {
