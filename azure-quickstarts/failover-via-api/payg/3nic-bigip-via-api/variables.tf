@@ -11,6 +11,11 @@ variable "prefix" {}
 variable "unique_string" {}
 variable "location" {}
 
+variable "owner" {
+  type                  = string
+  description           = "Employee e-mail address"
+}
+
 #Tags
 variable "environment" { default = "azure" }
 variable "service_discovery_value" { default = "production" }
@@ -34,6 +39,10 @@ variable "subnet_internal" {
 #Gateways
 variable "management_gateway" { default = "10.0.0.1"}
 variable "external_gateway" { default = "10.0.1.1"}
+
+variable "trusted_IP" {
+  type    = string 
+}
 
 # BIGIP Image PAYG
 variable "instance_type" { default = "Standard_DS3_v2" }

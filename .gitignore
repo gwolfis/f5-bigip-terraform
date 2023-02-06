@@ -1,0 +1,3 @@
+azure-quickstarts/**/terraform.tfvars
+azure-quickstarts/**/.terraform*
+azure-quickstarts/**/terraform.tfstate*

@@ -4,6 +4,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   address_space       = [var.cidr]
+  tags                = local.tags
 }
 
 #Create the Subnets
@@ -43,8 +44,9 @@ resource "azurerm_route_table" "cfe_udr" {
     next_hop_in_ip_address = azurerm_network_interface.bigip0_internal.private_ip_address
   }
 
-  tags = {
+  tags = merge({
     f5_cloud_failover_label = "${var.prefix}-failover-label"
     f5_self_ips             = "${azurerm_network_interface.bigip0_internal.private_ip_address}, ${azurerm_network_interface.bigip1_internal.private_ip_address}"
-  }
+  },
+  local.tags)
 }
