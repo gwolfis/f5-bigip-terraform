@@ -17,30 +17,30 @@ When you are not familar with these F5 BIG-IP designs in public cloud, please ch
 
 ## What to expect
 
-Each pre-crafted design can be used to deploy F5 BIG-IP whihc than will get provisioned into Azure public cloud.
+Each pre-crafted design can be used to deploy F5 BIG-IP which than will get provisioned into Azure public cloud.
 The following will happen:
 
 * A full deployment of BIG-IP will get configured in Azure, including network, storage, VMs, backend webservers with an basic application.
 * BIG-IP will get deployed with LTM and WAF fully functioning.
-* BIG-IP uses [runtime-init](https://github.com/F5Networks/f5-bigip-runtime-init) and leverage it as a startup config to download and install [F5 Automation Tool Chain](https://clouddocs.f5.com/) packages and deploys them so the functions can be leveraged during the deployment.
+* BIG-IP uses [runtime-init](https://github.com/F5Networks/f5-bigip-runtime-init) and leverages it as a startup config (cloud-init) to download and install [F5 Automation Tool Chain](https://clouddocs.f5.com/) packages and deploys them so these ATC functions can be leveraged during and after the deployment.
 
 ![](png/f5atc.png)
 
 ## How to use
 
-```
-Note:
+
+**Note:**
 When selecting the 'big-iq' developed F5 BIG-IP designs, please be aware that this repo does not provide you with a BIG-IQ License Manager.
-```
+
 
 1. Clone the Azure quick start collection and include it into your own before deploying.
 
 2. Once cloned, make sure Terraform and Azure CLI are installed on the system from where you want to start   using the cloned repo.
 
-  ```
-     WARNING:
+ 
+     **WARNING:**
      Make sure that you have 'Enabled' the BIG-IP Plan at Azure Marketplace by subscribing the 'Terms of Use' before deploying.
-  ```
+  
   ![](png/subscribe.png)
 
 3. Copy tfvars.tf.example to tfvars.tf and modify it to your personal needs.

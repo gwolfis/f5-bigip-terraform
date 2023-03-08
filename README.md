@@ -21,17 +21,3 @@ Delivered pre-canned designs are:
 
 Go: [Azure Quick Starts](/azure-quickstarts/)
 
-________
-
-## Azure Use Cases
-
-The part of the repo provides BIG-IP use cases.
-
-Sometimes a pre-canned design does not deliver upon the stated requirements. In that it might mean that special solution needs to get developed to show how BIG-IP is still able to support the use case.
-
-That is what this section includes.
-
-Current use cases are:
-- BIG-IP Failover via-lb with failover-sync and mirroring enabled
-
-Go: [Azure Use Cases](/azure-use-cases/)
