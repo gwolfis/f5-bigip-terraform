@@ -20,6 +20,8 @@ All BIG-IPs are currently running with TMOS version 16.1.20200.
 When deploying the Terraform scripts with the latest TMOS version 16.1.30200 Telemetry Streaming will fail event log data due to the following error as described in the here: [K05413010: After an upgrade, iRules using the loopback address may fail and log TCL errors](https://my.f5.com/manage/s/article/K05413010).
 
 -----
+
+## Introduction
 This collection of Terraform scripts are focussed on how to deploy an F5 BIG-IP into Azure public cloud.
 
 There are two sections available:
