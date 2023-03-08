@@ -1,64 +1,91 @@
-# Azure Quickstarts
+# Azure Quick Starts
 
 **This is a community based project. As such, F5 does not provide any offical support for this project**
 
-Azure quickstarts are a result from creating the Cloud and Automation Workshop which can be found here: https://github.com/gwolfis/cloud-automation-workshop.
+## Introduction
+This repo includes several scripts to deploy F5 BIG-IP solutions into **Azure** by either selecting PAYG or the BIG-IQ section. 
 
-Azure quickstarts deliver a full deployment, including:
- * F5 BIG-IP pre-designed solutions
- * Deployed by using Terraform
- * Leveraging F5 Runtime-init
- * Include F5 Automation Toolchain: AS3, Declarative Onboarding (DO), Telemetry Streaming (TS) and Cloud Failover Extension (CFE)
- * Uses application service discovery
- * Use Azure Telemetry by deploying an Azure Workbook
+F5 BIG-IP solution designs are:
+- standalone
+- failover via-api
+- failover-lb
+- auto-scale
 
- The Runtime-Init scripts used are from the F5 validated Cloud Solution Templates v2 (CSTv2). These templates can be found here: https://github.com/F5Networks/f5-azure-arm-templates-v2
+Each deployment uses **Terraform** to launch one or more BIG-IP('s) with 1-nic or 3-nics.
 
- ## How to Start
- Download the code from github into your own repository.
+When you are not familar with these F5 BIG-IP designs in public cloud, please check out the F5 Cloud Solution Tempates on Github: https://github.com/F5Networks/f5-azure-arm-templates-v2.
 
- **git clone https://github.com/gwolfis/f5-bigip-terraform.git**
+## What to expect
 
- Make sure you copy the terraform.tfvars.example to terraform.tfvars.
+Each pre-crafted design can be used to deploy F5 BIG-IP whihc than will get provisioned into Azure public cloud.
+The following will happen:
 
- **cp terraform.tfvars.example terraform.tfvars**
+* A full deployment of BIG-IP will get configured in Azure, including network, storage, VMs, backend webservers with an basic application.
+* BIG-IP will get deployed with LTM and WAF fully functioning.
+* BIG-IP uses [runtime-init](https://github.com/F5Networks/f5-bigip-runtime-init) and leverage it as a startup config to download and install [F5 Automation Tool Chain](https://clouddocs.f5.com/) packages and deploys them so the functions can be leveraged during the deployment.
 
- Make sure you have both Terraform and Azure CLI installed on your system.
+![](png/f5atc.png)
 
-To deploy a quickstart, select a design of choice like auto-scale, failover or stand-alone and deploy by using Terraform. Each design can be used either through PAYG or by using BIG-IQ License Manager if you have one deployed. The easiest way to go is to leverage PAYG.
+## How to use
 
-**Be sure that you subscribe to the F5 BIG-IP product of choice on the Azure Marketplace before deploying!**
+```
+Note:
+When selecting the 'big-iq' developed F5 BIG-IP designs, please be aware that this repo does not provide you with a BIG-IQ License Manager.
+```
 
- ```
- terraform init
- terraform plan
- terraform apply -auto-approve
- ```
+1. Clone the Azure quick start collection and include it into your own before deploying.
 
-* Time to deploy will take between 10 - 15 minutes.
+2. Once cloned, make sure Terraform and Azure CLI are installed on the system from where you want to start   using the cloned repo.
 
-* Terraform will deliver its output after 3 - 5 minutes.
+  ```
+     WARNING:
+     Make sure that you have 'Enabled' the BIG-IP Plan at Azure Marketplace by subscribing the 'Terms of Use' before deploying.
+  ```
+  ![](png/subscribe.png)
 
-## After Deployment
-Once the BIG-IP design has been deployed in Azure you can use the Terraform output to find the BIG-IP management public IP to login. Also the Azure Console can be used to find this information.
+3. Copy tfvars.tf.example to tfvars.tf and modify it to your personal needs.
 
-The application can be tested and validated by using the application public IP or VIP provided through the Terraform output.
+4. From a Shell, deploy the selected BIG-IP design by typing the following in the selected script folder:
 
-Make sure to test and generate some traffic to fill up the Azure Telemetry.
+   **terraform init**
 
-One test you should make for sure is providing an illegal action to awake the included WAF configuration.
+   **terraform plan**
 
-Use the following curl command to create this illegal action:
+   **terraform apply -auto-approve**
 
-**curl -sk -X DELETE https://<your_apps_public_ip_address>**
+   When Terraform is done it generates useful output.
 
-## Azure Telemetry
-Logging can be watched by using the Azure Workbook which has been created during the deployment. In the Azure Console you can go to the resource group and search for **f5telemetry** and select it. Now select **Workbooks** and select **F5 BIG-IP WAF View** and check the graphs.
+5. Complete deployment of the BIG-IPs using runtime, including the backends, can take around 10 - 15 mins.
 
-## Troubleshooting
-When for some reason your deployment doesn't work as expected or you are just curious how things work under the hood, here are some things you can check out **on the BIG-IP**:
+## Once Deployed
+Login to the BIG-IPs and explore how everything has been deployed and configured by only doing a 'Terraform apply'. When deploying a cluster with via-api check if both BIG-IPs are synced.
 
-* To check the runtime-init deployment: **vim /config/cloud/runtime-init-conf**
-* Re-running runtime-init: **f5-bigip-runtime-init --config-file /config/cloud/runtime-init-conf.yaml**
-* To watch the logging generated by runtime-init colllected on the BIG-IP: **tail -f /var/log/cloud/bigIpRuntimeInit.log**
-* To watch Service Discovery and Telemetry Streaming traffic: **tail -f /var/log/restnoded/restnoded.log**
+Check if the application is up and running and test it by using the VIP public IP. This will be associated by Azure with the BIG-IP VIPs private IP. 
+
+At the Azure portal go to the created resource group and select **f5telemetry > workbooks > F5 BIG-IP WAF View** to check the deployed graphs. You will notice that at this point it might take time before the Application availability graphs will show some results.
+
+For the WAF section of the graphs we first need to generate some 'negative' traffic.
+
+**curl -sk -X DELETE https://(vip-pub-ip-address)** (repeat this a couple of times)
+
+After 5 - 10 minutes you will see the graphs section turn from 'red' error into 'blue' this indicates that the graphs will get intiated and within a couple of refreshes you will see WAF graphs showing up.
+
+Meanwhile you can check at the BIG-IP in the security section if the Application Securiy Policy is getting hit.
+
+Once the log data has reached **F5 BIG-IP WAF View** you should have the same kind of view as below.
+
+ ![](png/workbook.png)
+
+ ## Removing the Deployment
+
+ Removing the BIG-IP design can be done by:
+ - via Terraform by destroying the deployment
+
+ **terraform destroy -auto-approve**
+
+ or:
+ - delete the Azure Resource Group in the portal.
+
+ ## Next Step
+ When you deployed an F5 BIG-IP via Terraform and like to know more you can check out this workshop: https://github.com/gwolfis/cloud-automation-workshop
+ 
