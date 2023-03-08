@@ -8,6 +8,7 @@ resource "azurerm_public_ip" "alb_pip" {
   sku                 = "Standard"
   allocation_method   = "Static"
   ip_version          = "IPv4"
+  tags                = local.tags
 }
 
 # Create ALB
@@ -16,6 +17,7 @@ resource "azurerm_lb" "alb" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
+  tags                = local.tags
 
   frontend_ip_configuration {
     name                 = "VIP_Pub_IP"

@@ -8,6 +8,7 @@ resource "azurerm_public_ip" "mgmt_pip" {
     location            = azurerm_resource_group.rg.location
     sku                 = "Standard"
     allocation_method   = "Static"
+    tags                = local.tags
 }
 
 resource "azurerm_public_ip" "ext_pip" {
@@ -17,6 +18,7 @@ resource "azurerm_public_ip" "ext_pip" {
     location            = azurerm_resource_group.rg.location
     sku                 = "Standard"
     allocation_method   = "Static"
+    tags                = local.tags
 }
 
 resource "azurerm_public_ip" "ext_vpip" {
@@ -26,6 +28,7 @@ resource "azurerm_public_ip" "ext_vpip" {
     location            = azurerm_resource_group.rg.location
     sku                 = "Standard"
     allocation_method   = "Static"
+    tags                = local.tags
 }
 
 # Network Interfaces
@@ -43,6 +46,7 @@ resource "azurerm_network_interface" "management" {
     public_ip_address_id          = "${element(azurerm_public_ip.mgmt_pip.*.id,count.index)}"
   }
   depends_on = [ azurerm_resource_group.rg ]
+  tags       = local.tags
 }
 
 resource "azurerm_network_interface" "external" {
@@ -177,5 +181,6 @@ resource "azurerm_linux_virtual_machine" "bigip" {
     caching              = "None"
     storage_account_type = "Premium_LRS"
   }
+  tags       = local.tags
 }
 

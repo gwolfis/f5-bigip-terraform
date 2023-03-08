@@ -87,7 +87,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "f5vmss" {
       }
     }
   }
- 
+  tags                = local.tags 
 }
 
 resource "azurerm_monitor_autoscale_setting" "f5vm_autoscale" {

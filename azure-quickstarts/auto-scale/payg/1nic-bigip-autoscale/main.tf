@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.1.4"
+  required_version = "~> 1.3.2"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -25,20 +25,24 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
   subscription_id = var.subscription_id
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
-  //subscription_id = local.tmp.subscription_id
-  //client_id       = local.tmp.client_id
-  //client_secret   = local.tmp.client_secret
-  //tenant_id       = local.tmp.tenant_id
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }    
 }
 
-# locals {
-#   tmp = yamldecode(file(var.tmpfile))
-# }
+locals {
+  tags = {
+    "environment"  = var.environment
+    "owner"        = var.owner
+    "deployment"   = var.deployment
+  }
+}
 
 # Create a random id
 resource "random_id" "storage_account" {
@@ -49,6 +53,7 @@ resource "random_id" "storage_account" {
 resource "azurerm_resource_group" "rg" {
   name     = var.prefix
   location = var.location
+  tags     = local.tags
 }
 
 resource "azurerm_storage_account" "bigip_storage" {
@@ -58,11 +63,11 @@ resource "azurerm_storage_account" "bigip_storage" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-bigip-storage"
     environment = var.environment
-
-  }
+  },
+  local.tags)
 }
 
 #Create Azure Managed User Identity and Role Definition

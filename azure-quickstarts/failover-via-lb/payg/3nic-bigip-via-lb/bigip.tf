@@ -46,8 +46,7 @@ resource "azurerm_network_interface" "management" {
     public_ip_address_id          = "${element(azurerm_public_ip.mgmt_pip.*.id,count.index)}"
   }
   depends_on = [ azurerm_resource_group.rg ]
-
-  tags                            = local.tags
+  tags       = local.tags
 }
 
 resource "azurerm_network_interface" "external" {
@@ -71,8 +70,7 @@ resource "azurerm_network_interface" "external" {
     private_ip_address_allocation = "Dynamic"
   }
   depends_on = [ azurerm_resource_group.rg ]
-
-  tags                            = local.tags
+  tags       = local.tags
 }
 
 resource "azurerm_network_interface" "internal" {
@@ -89,8 +87,7 @@ resource "azurerm_network_interface" "internal" {
     primary                       = true
   }
   depends_on = [ azurerm_resource_group.rg ]
-
-  tags                            = local.tags
+  tags       = local.tags
 }
 
 resource "azurerm_network_interface_security_group_association" "mgmtnsg" {
@@ -117,7 +114,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "bigip_bac
   network_interface_id    = element(azurerm_network_interface.external.*.id, count.index)
   ip_configuration_name   = "${var.prefix}${count.index}-ext-vip${count.index}"
   backend_address_pool_id = azurerm_lb_backend_address_pool.bigip_backend_pool.id
-  depends_on = [ azurerm_resource_group.rg ]
+  depends_on              = [ azurerm_resource_group.rg ]
 }
 
 # Onboard Template
@@ -136,8 +133,8 @@ data "template_file" "init_file" {
     user_password      = var.user_password
     self_ip_external   = element(azurerm_network_interface.external.*.private_ip_address,count.index)
     self_ip_internal   = element(azurerm_network_interface.internal.*.private_ip_address,count.index)
-    management_gateway = cidrhost(azurerm_subnet.management.address_prefixes[0], 1)
-    external_gateway   = cidrhost(azurerm_subnet.external.address_prefixes[0], 1)
+    management_gateway = cidrhost(azurerm_subnet.management.address_prefix, 1)
+    external_gateway   = cidrhost(azurerm_subnet.external.address_prefix, 1)
     vip                = element(azurerm_network_interface.external[count.index].private_ip_addresses, 1)
     unique_string      = var.unique_string
     workspace_id       = azurerm_log_analytics_workspace.law.workspace_id
@@ -183,7 +180,6 @@ resource "azurerm_linux_virtual_machine" "bigip" {
     caching              = "None"
     storage_account_type = "Premium_LRS"
   }
-
-  tags                          = local.tags
+  tags       = local.tags
 }
 

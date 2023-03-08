@@ -72,4 +72,8 @@ resource "azurerm_virtual_machine_scale_set" "appvmss" {
       subnet_id = azurerm_subnet.internal.id
     }
   }
+  tags = merge({
+    discovery = var.service_discovery_value
+  },
+  local.tags)
 }

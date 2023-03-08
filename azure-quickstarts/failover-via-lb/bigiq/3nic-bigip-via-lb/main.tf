@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.1.4"
+  required_version = "~> 1.3.2"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -25,11 +25,23 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
   subscription_id = var.subscription_id
   client_id       = var.client_id
   client_secret   = var.client_secret
-  tenant_id       = var.tenant_id  
+  tenant_id       = var.tenant_id
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }    
+}
+
+locals {
+  tags = {
+    "environment"  = var.environment
+    "owner"        = var.owner
+    "deployment"   = var.deployment
+  }
 }
 
 
@@ -49,6 +61,7 @@ resource "azurerm_ssh_public_key" "f5_key" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   public_key          = file("~/.ssh/id_rsa.pub")
+  tags                = local.tags
 }
 #Create Azure Managed User Identity and Role Definition
 resource "azurerm_user_assigned_identity" "bigip_user_identity" {

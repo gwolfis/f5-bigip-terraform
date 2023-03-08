@@ -15,7 +15,7 @@ resource "azurerm_network_security_group" "mgmtnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
@@ -28,14 +28,15 @@ resource "azurerm_network_security_group" "mgmtnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "443"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-mgmtnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }
 
 resource "azurerm_network_security_group" "extnsg" {
@@ -52,7 +53,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
@@ -65,7 +66,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "443"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
@@ -78,7 +79,7 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "8443"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
@@ -91,14 +92,15 @@ resource "azurerm_network_security_group" "extnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-extnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }
 
 resource "azurerm_network_security_group" "intnsg" {
@@ -115,7 +117,7 @@ resource "azurerm_network_security_group" "intnsg" {
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
@@ -128,12 +130,13 @@ resource "azurerm_network_security_group" "intnsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = "*"
+    source_address_prefix      = var.source_ip
     destination_address_prefix = "*"
   }
 
-  tags = {
+  tags = merge({
     name        = "${var.prefix}-intnsg"
     environment = var.environment
-  }
+  },
+  local.tags)
 }

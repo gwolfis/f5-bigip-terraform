@@ -1,45 +1,47 @@
 terraform {
-  required_version = "~>1.3.0"
+  required_version = "~> 1.3.2"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.41.0"
+      version = "2.94.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = "~>3.4.0"
+      version = "3.1.0"
     }
     template = {
       source  = "hashicorp/template"
-      version = "~>2.2.0"
+      version = ">2.1.2"
     }
     null = {
       source  = "hashicorp/null"
-      version = "~>3.2.0"
+      version = ">2.1.2"
     }
     local = {
       source  = "hashicorp/local"
-      version = "~>2.3.0"
+      version = "2.1.0"
     }
-  }
-}
-
-locals {
-  tags = {
-    "Owner" = var.owner
   }
 }
 
 provider "azurerm" {
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
     }
+  }    
+}
+
+locals {
+  tags = {
+    "environment"  = var.environment
+    "owner"        = var.owner
+    "deployment"   = var.deployment
   }
-  subscription_id = var.subscription_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  tenant_id       = var.tenant_id  
 }
 
 

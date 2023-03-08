@@ -8,6 +8,12 @@ tenant_id       = ""
 user_name       = "azureuser"
 user_password   = "F5emea12345!"
 
+# Tags
+environment             = "azure"
+owner                   = "joe.smith@email.com"
+deployment              = "demo"
+service_discovery_value = "production"
+
 # Azure Deployment environment
 prefix          = "3nic-bigip-via-api-payg"
 unique_string   = "testapp"
@@ -18,14 +24,4 @@ cidr              = "10.1.0.0/16"
 subnet_management = ["10.1.0.0/24"]
 subnet_external   = ["10.1.1.0/24"]
 subnet_internal   = ["10.1.2.0/24"]
-
-# BIG-IP
-instance_type    = "Standard_DS3_v2"
-image_name       = "f5-big-all-2slot-byol"
-product          = "f5-big-ip-byol"
-bigip_version    = "16.1.202000"
-
-# BIG-IQ
-bigiq_ip        = ""
-bigiq_user_name = ""
-bigiq_password  = ""
+source_ip         = "*"
