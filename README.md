@@ -1,4 +1,4 @@
-# F5 BIG-IP in Azure by using Terraform
+# F5 BIG-IP in AWS and Azure by using Terraform
 
 **This is a community based project. As such, F5 does not provide any offical support for this project**
 
