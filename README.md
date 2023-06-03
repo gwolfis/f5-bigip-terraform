@@ -4,7 +4,7 @@
 
 -----
 
-**Latest Updates 8 March 2023**
+**Latest Updates F5 ATC are from 8 March 2023**
 
 All azure deployments have been updated to the latest F5 Automation ToolChain (ATC) packages:
 * Declarative Onboarding (DO): [v1.36.0](https://github.com/F5Networks/f5-declarative-onboarding/releases)
