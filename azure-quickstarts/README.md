@@ -6,10 +6,10 @@
 This repo includes several scripts to deploy F5 BIG-IP solutions into **Azure** by either selecting PAYG or the BIG-IQ section. 
 
 F5 BIG-IP solution designs are:
-- standalone
-- failover via-api
-- failover-lb
-- auto-scale
+- standalone;
+- failover via-api;
+- failover-lb;
+- auto-scale.
 
 Each deployment uses **Terraform** to launch one or more BIG-IP('s) with 1-nic or 3-nics.
 
