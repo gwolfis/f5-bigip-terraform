@@ -39,7 +39,7 @@ Delivered deployments are:
 - Failover (via-lb);
 - auto-scale.
 
-Go: [Azure Quick Starts](/aws-quickstarts/)
+Go: [AWS Quick Starts](/aws-quickstarts/)
 
 ## Azure Quick Starts
 
