@@ -1,0 +1,16 @@
+# AWS Credentials
+aws_access_key = ""
+aws_secret_key = ""
+
+# tfvars input
+prefix        = "one-subnet-vpc"
+region        = "eu-central-1"
+environment   = "aws"
+deployment    = "demo"
+owner         = "joe.smith"
+ec2_key_name  = ""
+
+# Networks
+cidr        = "10.10.0.0/16"
+subnet_mgmt = "10.10.0.0/24"
+az1         = "eu-central-1b"

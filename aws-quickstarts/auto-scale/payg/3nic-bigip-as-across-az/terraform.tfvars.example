@@ -1,0 +1,29 @@
+# AWS Credentials
+aws_access_key = ""
+aws_secret_key = ""
+
+# tfvars input
+prefix        = "3nic-bigip-standalone-payg"
+region        = "eu-central-1"
+environment   = "aws"
+deployment    = "demo"
+owner         = "joe.smith"
+ec2_key_name  = ""
+user_name     = "admin"
+user_password = "F5demo12345!"
+
+# Networks
+cidr            = "10.10.0.0/16"
+subnet_mgmt     = "10.10.0.0/24"
+subnet_external = "10.10.1.0/24"
+subnet_internal = "10.10.2.0/24"
+az1             = "eu-central-1b"
+
+# BIG-IP
+f5_ami_search_name = "F5 BIGIP-16.1.3.3* PAYG-Best Plus 25Mbps*"
+ec2_instance_type  = "m5.large"
+
+# Application
+server_count        = 2
+discovery_tag_key   = "auto-discovery"
+discovery_tag_value = "discover"
