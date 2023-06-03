@@ -25,8 +25,21 @@ When deploying the Terraform scripts with the latest TMOS version 16.1.30200 Tel
 This collection of Terraform scripts are focussed on how to deploy an F5 BIG-IP into Azure public cloud.
 
 There are two sections available:
-- Azure Quick Starts;
-- Azure Use Cases.
+- AWS Quick Starts;
+- Azure Quick Starts.
+
+## AWS Quick Starts
+
+These quick starts deploy F5 BIG-IP in AWS via Terraform. The deployments are fully equiped with a working application. The Terraform Output will provide all the details.
+
+For AWS only the PAYG or utility based deployments are developed.
+
+Delivered deployments are:
+- Standalone;
+- Failover (via-lb);
+- auto-scale.
+
+Go: [Azure Quick Starts](/aws-quickstarts/)
 
 ## Azure Quick Starts
 

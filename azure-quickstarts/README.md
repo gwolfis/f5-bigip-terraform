@@ -13,7 +13,7 @@ F5 BIG-IP solution designs are:
 
 Each deployment uses **Terraform** to launch one or more BIG-IP('s) with 1-nic or 3-nics.
 
-When you are not familar with these F5 BIG-IP designs in public cloud, please check out the F5 Cloud Solution Tempates on Github: https://github.com/F5Networks/f5-azure-arm-templates-v2.
+When you are not familar with these F5 BIG-IP designs in public cloud, please check out the F5 Cloud Solution Templates on Github: https://github.com/F5Networks/f5-azure-arm-templates-v2.
 
 ## What to expect
 
@@ -76,16 +76,16 @@ Once the log data has reached **F5 BIG-IP WAF View** you should have the same ki
 
  ![](png/workbook.png)
 
- ## Removing the Deployment
+## Removing the Deployment
 
- Removing the BIG-IP design can be done by:
- - via Terraform by destroying the deployment
+Removing the BIG-IP design can be done by:
+- via Terraform by destroying the deployment
 
- **terraform destroy -auto-approve**
+**terraform destroy -auto-approve**
 
- or:
- - delete the Azure Resource Group in the portal.
+or:
+- delete the Azure Resource Group in the portal.
 
- ## Next Step
- When you deployed an F5 BIG-IP via Terraform and like to know more you can check out this workshop: https://github.com/gwolfis/cloud-automation-workshop
+## Next Step
+When you deployed an F5 BIG-IP via Terraform and like to know more you can check out this workshop: https://github.com/gwolfis/cloud-automation-workshop
  
