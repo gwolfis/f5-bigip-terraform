@@ -6,9 +6,9 @@
 This repo includes several scripts to deploy F5 BIG-IP solutions into **AWS** by either selecting the PAYG section. 
 
 F5 BIG-IP solution designs are:
-- standalone
-- failover-lb
-- auto-scale
+- standalone;
+- failover-lb;
+- auto-scale.
 
 Each deployment uses **Terraform** to launch one or more BIG-IP('s) with 1-nic or 3-nics.
 
